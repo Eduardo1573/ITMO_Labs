@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Random;
                          
-public class First_Laba {
+public class First {
 	public static void main(String[] args) {
 		printer(calc());
 	}
@@ -19,17 +19,21 @@ public class First_Laba {
 		double[][] z1 = new double[7][19];
 		for (var i=0; i<7; i++) {
 			for (var j=0; j<19; j++) {
-				double absX = Math.abs(x[j]);
-				if (z[i] == 4) {
-					z1[i][j] = Math.asin(1 / Math.pow( Math.E, 2 * Math.sqrt(absX) ));
-				} else if (z[i] == 8 || z[i] == 12 || z[i] == 16) {
-					z1[i][j] = Math.pow(4*(absX + 1), x[j]);
-				} else {
-					z1[i][j] = Math.pow(Math.PI * Math.log(Math.pow(absX + 1, Math.pow(Math.log(absX)/Math.PI, 2))), 2);
-				}
+				z1[i][j] = element(i, j, x, z);
 			}
 		}
 		return z1;
+	}
+	
+	public static double element(int i, int j, double[] x, double[] z) {
+	    double absX = Math.abs(x[j]);
+		if (z[i] == 4) {
+			return Math.asin(1 / Math.pow( Math.E, 2 * Math.sqrt(absX) ));
+		} else if (z[i] == 8 || z[i] == 12 || z[i] == 16) {
+			return Math.pow(4*(absX + 1), x[j]);
+		} else {
+			return Math.pow(Math.PI * Math.log(Math.pow(absX + 1, Math.pow(Math.log(absX)/Math.PI, 2))), 2);
+		}
 	}
 	
 	public static void printer(double My_array[][]) {
@@ -41,11 +45,3 @@ public class First_Laba {
 		}
 	}
 }
-
-
-
-
-
-
-
-
