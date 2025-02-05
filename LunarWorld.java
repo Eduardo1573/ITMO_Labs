@@ -1,11 +1,11 @@
 import java.util.*;
 
 interface Stateful {
-    void updateState();
+    void NextAct();
 }
 
 enum GravityState {
-    NORMAL, ZERO_GRAVITY
+    NORMAL, ZERO
 }
 
 abstract class Character implements Stateful {
@@ -17,12 +17,12 @@ abstract class Character implements Stateful {
         this.gravityState = GravityState.NORMAL;
     }
 
-    public void enterZeroGravity() {
-        this.gravityState = GravityState.ZERO_GRAVITY;
+    public void ZeroGravity() {
+        this.gravityState = GravityState.ZERO;
         System.out.println(name + " попал в состояние невесомости.");
     }
 
-    public void exitZeroGravity() {
+    public void ExitZeroGravity() {
         this.gravityState = GravityState.NORMAL;
         System.out.println(name + " вернулся в нормальное состояние гравитации.");
     }
@@ -30,12 +30,12 @@ abstract class Character implements Stateful {
     public abstract void act();
 }
 
-record Television(String channel) {}
+record TV(String channel) {}
 
 class Viewer extends Character {
-    private Television tv;
+    private TV tv;
 
-    public Viewer(String name, Television tv) {
+    public Viewer(String name, TV tv) {
         super(name);
         this.tv = tv;
     }
@@ -46,7 +46,7 @@ class Viewer extends Character {
     }
 
     @Override
-    public void updateState() {
+    public void NextAct() {
         System.out.println(name + " продолжает наблюдать за экраном.");
     }
 }
@@ -64,7 +64,7 @@ class Policeman extends Character {
             throw new Exception(name + " не может стрелять без винтовки!");
         }
         System.out.println(name + " стреляет из дальнобойной винтовки.");
-        enterZeroGravity();
+        ZeroGravity();
     }
 
     @Override
@@ -77,21 +77,21 @@ class Policeman extends Character {
     }
 
     @Override
-    public void updateState() {
-        if (gravityState == GravityState.ZERO_GRAVITY) {
+    public void NextAct() {
+        if (gravityState == GravityState.ZERO) {
             System.out.println(name + " несется вокруг Луны в невесомости.");
         }
     }
 }
 
-class LunarWorld {
+class lab34 {
     public static void main(String[] args) {
-        Television tv = new Television("Канал космонавтики");
+        TV tv = new TV("Канал космонавтики");
         Viewer viewer1 = new Viewer("Иван", tv);
         Viewer viewer2 = new Viewer("Мария", tv);
         Policeman policeman = new Policeman("Хныгль");
 
-        List<Character> characters = new ArrayList<>(List.of(viewer1, viewer2, policeman));
+        List <Character> characters = new ArrayList <> (List.of(viewer1, viewer2, policeman));
 
         System.out.println("На экране появились танцующие пары...");
         for (Character character : characters) {
@@ -100,7 +100,7 @@ class LunarWorld {
 
         System.out.println("Новости о космонавтах начались!");
         for (Character character : characters) {
-            character.updateState();
+            character.NextAct();
         }
     }
 }
