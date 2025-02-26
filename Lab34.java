@@ -12,6 +12,12 @@ interface TvProgram {
     void play();
 }
 
+class OrbitException extends Exception {
+    public OrbitException(String message) {
+        super(message);
+    }
+}
+
 abstract class Character implements Stateful {
     protected String name;
     protected GravityState gravityState;
@@ -85,10 +91,10 @@ class Policeman extends Character {
     }
     
     
-    public void land() throws Exception {
+    public void land() throws OrbitException {
         if(hasRifle) {
             if (!aboutToLand) {
-                throw new Exception(name + " остался витать по орбите!");
+                throw new OrbitException(name + " остался витать по орбите!");
             }
             System.out.println(name + " приземлился");
             exitZeroGravity();
@@ -108,7 +114,7 @@ class Policeman extends Character {
     public void nextAct() {
         try {
             land();
-        } catch (Exception e) {
+        } catch (OrbitException e) {
             System.out.println(e.getMessage());
         }
     }
